@@ -41,14 +41,21 @@ public class Tree {
     }
     
     
-    public void insertar(Nodo n, String p, String r){
+    public void insertar(Nodo n, String p, String r, boolean modifier){
         if(respuesta == false){
             Nodo aux = n;
             n.setInfo(p);
             n.setPregunta(true);
-            n.setHijoD(aux);
-            aux.setInfo(r);
-            n.setHijoI(aux);
+            if (modifier == false) {
+                n.setHijoD(aux);
+                aux.setInfo(r);
+                n.setHijoI(aux);
+            }
+            if (modifier == true) {
+                n.setHijoI(aux);
+                aux.setInfo(r);
+                n.setHijoD(aux);
+            }
         }
     }
 }
