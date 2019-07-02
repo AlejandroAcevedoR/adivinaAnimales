@@ -5,6 +5,8 @@
  */
 package adivinaanimales;
 
+import java.io.IOException;
+
 /**
  *
  * @author Alejandro
@@ -14,8 +16,12 @@ public class AdivinaAnimales {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
+        
+        View ventana = new View();
+        ventana.setVisible(true);
+        
     }
     
 }

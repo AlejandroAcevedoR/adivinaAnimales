@@ -53,9 +53,5 @@ public class Nodo {
     public void setHijoD(Nodo hijoD) {
         this.hijoD = hijoD;
     }
-
-    
-
-    
-    
+          
 }
