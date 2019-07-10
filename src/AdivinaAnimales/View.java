@@ -20,13 +20,21 @@ public class View extends javax.swing.JFrame {
      */
     
     Tree adivinador = new Tree();
-    
+    Tree grafico = new Tree();
+    Nodo aux;
+    boolean pausa = true;
+    boolean modificador = false;         
+
     public View() throws IOException {
+        
         adivinador.inicio();
         adivinador.leerConocimientos(adivinador.getRaiz(), true);
         adivinador.resetear();
-        adivinador.actualizarConocimientos(adivinador.getRaiz());
-        initComponents();        
+        adivinador.actualizarConocimientos(adivinador.getRaiz(), true);
+        initComponents();
+        aux = adivinador.getRaiz();
+        jlabel6.setText(aux.getInfo());
+        
     }
 
     /**
@@ -43,14 +51,12 @@ public class View extends javax.swing.JFrame {
         si = new javax.swing.JToggleButton();
         no = new javax.swing.JToggleButton();
         jLabel2 = new javax.swing.JLabel();
-        palabras = new javax.swing.JTextField();
         iniciar = new javax.swing.JButton();
         resetear = new javax.swing.JButton();
         mostrar = new javax.swing.JButton();
         salir = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jlabel6 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -73,12 +79,6 @@ public class View extends javax.swing.JFrame {
         });
 
         jLabel2.setText("jLabel2");
-
-        palabras.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                palabrasActionPerformed(evt);
-            }
-        });
 
         iniciar.setText("Iniciar");
         iniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -105,24 +105,15 @@ public class View extends javax.swing.JFrame {
 
         jLabel3.setText("ADIVINADOR DE ANIMALES");
 
-        jLabel5.setText("jLabel5");
-
-        jLabel6.setText("jLabel6");
+        jlabel6.setText("jLabel6");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(182, 182, 182))
             .addGroup(layout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(iniciar)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -130,13 +121,9 @@ public class View extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(salir))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(si)
-                                    .addComponent(jLabel5))
+                                .addComponent(si)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(palabras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(no, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                .addComponent(no)))
                         .addGap(69, 69, 69))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,8 +132,13 @@ public class View extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addGap(36, 36, 36)
                                 .addComponent(jLabel2))
-                            .addComponent(resetear))
-                        .addContainerGap(58, Short.MAX_VALUE))))
+                            .addComponent(resetear)
+                            .addComponent(iniciar))
+                        .addContainerGap(64, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(190, Short.MAX_VALUE)
+                .addComponent(jlabel6)
+                .addGap(182, 182, 182))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,16 +148,12 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(palabras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
+                .addComponent(jlabel6)
+                .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(si)
                     .addComponent(no))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(iniciar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resetear)
@@ -180,15 +168,86 @@ public class View extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void noActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noActionPerformed
-        // TODO add your handling code here:
+        
+        adivinador.setRespuesta(false);
+        if(!(aux.getInfo().equals("Tiene que ser un animal") || aux.getInfo().equals("Soy el más grande!") || aux.getInfo().equals("aqui van las preguntas") || jlabel6.getText().equals("aqui van las preguntas"))){
+            
+            if(aux.isPregunta()==false){
+            
+                                
+                String aux1 = "";
+                String aux2 = "";
+                boolean aux3 = true;
+                
+                NuevoNodo insertar = new NuevoNodo(this, true);   
+                insertar.setEncabezado(aux.getInfo());
+                insertar.setVisible(true);    
+                
+                jlabel6.setText(aux.getHijoD().getInfo());
+                pausa = false;
+                
+                while(pausa == false){
+                    
+                    try{
+                        Thread.sleep(500);
+                    }catch(InterruptedException ex){
+                        Thread.currentThread().interrupt();
+                    }
+                    
+                    pausa = insertar.isPausa();
+                    aux1 = insertar.getRespuesta();
+                    aux2 = insertar.getPregunta();
+                    aux3 = insertar.isModificador();
+                    
+                }
+                
+                adivinador.insertar(adivinador.find(adivinador.getRaiz(), aux.getInfo()), aux2, aux1, aux3);
+                try {
+                    adivinador.actualizarConocimientos(adivinador.getRaiz(), true);
+                } catch (IOException ex) {
+                    Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }else{
+            
+                aux = adivinador.mover(adivinador.find(adivinador.getRaiz(), aux.getInfo()));
+            
+                
+                if(aux.getInfo().equals("Tiene que ser un animal")){
+                    jlabel6.setText(aux.getInfo());
+                }else if(aux.isPregunta()==false){
+                    jlabel6.setText("es un "+aux.getInfo()+"?");
+                }else{
+                    jlabel6.setText(aux.getInfo()+"?");
+                }
+            
+            }
+        }
     }//GEN-LAST:event_noActionPerformed
 
-    private void palabrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_palabrasActionPerformed
-        
-    }//GEN-LAST:event_palabrasActionPerformed
-
     private void siActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siActionPerformed
-        // TODO add your handling code here:
+        
+        adivinador.setRespuesta(true);
+        if(!(aux.getInfo().equals("Tiene que ser un animal") || aux.getInfo().equals("Soy el más grande!") || aux.getInfo().equals("aqui van las preguntas") || jlabel6.getText().equals("aqui van las preguntas"))){
+            
+            if(aux.isPregunta()==false){
+                
+                aux=adivinador.mover(adivinador.find(adivinador.getRaiz(), aux.getInfo()));
+                jlabel6.setText(aux.getInfo());
+            
+            }else{
+            
+                aux=adivinador.mover(adivinador.find(adivinador.getRaiz(), aux.getInfo()));
+            
+                if(aux.isPregunta() == false){
+                    jlabel6.setText("es un "+aux.getInfo()+"?");
+                }else{
+                    jlabel6.setText(aux.getInfo()+"?");
+                }
+            
+            }
+        }
+        
     }//GEN-LAST:event_siActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
@@ -197,11 +256,14 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_salirActionPerformed
 
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
-        // TODO add your handling code here:
+        grafico.setRaiz(adivinador.getRaiz().getHijoI());
+        treeGUI gui = new treeGUI(grafico);
     }//GEN-LAST:event_mostrarActionPerformed
 
     private void iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarActionPerformed
-        // TODO add your handling code here:
+        
+        aux = adivinador.getRaiz();
+        jlabel6.setText(aux.getInfo());
     }//GEN-LAST:event_iniciarActionPerformed
 
     /**
@@ -249,11 +311,9 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jlabel6;
     private javax.swing.JButton mostrar;
     private javax.swing.JToggleButton no;
-    private javax.swing.JTextField palabras;
     private javax.swing.JButton resetear;
     private javax.swing.JButton salir;
     private javax.swing.JToggleButton si;

@@ -1,0 +1,14 @@
+﻿CONOCIMIENTOS:
+31Estas pensando en un animal
+31maulla
+30gato
+00Soy el mas grande!
+00aqui van las preguntas
+31tiene alas
+30Pájaro
+00Soy el más grande!
+00aqui van las preguntas
+30conejo
+00Soy el mas grande!
+00aqui van las preguntas
+00Tiene que ser un animal

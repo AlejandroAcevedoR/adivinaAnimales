@@ -20,7 +20,7 @@ public class Tree {
     
     Nodo raiz;
     boolean respuesta;
-    String inicio = "Estás pensando en un animal?";
+    
     
     //inicializacion del BufferedWriter
     FileWriter writer = new FileWriter("conocimientos.txt", true);
@@ -42,65 +42,121 @@ public class Tree {
 
     public Nodo getRaiz() {
         return raiz;
-    }    
+    }
+
+    public void setRaiz(Nodo raiz) {
+        this.raiz = raiz;
+    }
+           
+    public void insertarRaiz(String a){
+        raiz = new Nodo(a);
+        raiz.setPregunta(true);
+    }
     
     public boolean vacio(Nodo n){
         return n == null;
     }
     
-    public void inicio(){
-        
-    Nodo aux;
-    Nodo auxHijo;
-        
-        if(raiz == null){
-            
-            raiz = new Nodo(inicio);            
-            aux = new Nodo("Es un pájaro?"); 
-            
-            auxHijo = new Nodo("Soy el más grande!");
-            aux.setHijoI(auxHijo);
-            auxHijo = new Nodo("aqui van las preguntas");
-            aux.setHijoD(auxHijo);
-                        
-            raiz.setHijoI(aux);
-            
-            aux = new Nodo("Tiene que ser un animal");
-            raiz.setHijoD(aux);
-            
-        }
-        
+    public int altura(Nodo root) {
+		if (root == null)
+			return 0;
+		return Math.max(altura(root.getHijoI()), altura(root.getHijoD())) + 1;
     }
     
+    public void inicio(){
+
+        Nodo aux;
+        Nodo auxHijo;
+
+        this.insertarRaiz("Estás pensando en un animal?");
+
+        aux = new Nodo("Pájaro");             
+        raiz.setHijoI(aux);
+
+        aux = new Nodo("Tiene que ser un animal");
+        raiz.setHijoD(aux);
+
+        auxHijo = new Nodo("Soy el más grande!");
+        raiz.hijoI.setHijoI(auxHijo);
+        
+        auxHijo = new Nodo("aqui van las preguntas");
+        raiz.hijoI.setHijoD(auxHijo);
+
+    }
     
-    public void insertar(Nodo n, String p, String r, boolean modifier){
+    public Nodo mover(Nodo n){
         
         if(respuesta == false){
+        
+            return n.hijoD;
             
-            Nodo aux = n;
-            n.setInfo(p);
-            n.setPregunta(true);
-            
-            if (modifier == false) {
-                n.setHijoD(aux);
-                aux.setInfo(r);
-                n.setHijoI(aux);
-            }
-            
-            if (modifier == true) {
-                n.setHijoI(aux);
-                aux.setInfo(r);
-                n.setHijoD(aux);
-            }
-            
+        }else{
+        
+            return n.hijoI; 
+        
         }
         
     }
     
-    public void actualizarConocimientos(Nodo input) throws IOException{
+    public void insertar(Nodo n, String p, String r, boolean modifier){
+               
+        Nodo aux = new Nodo(n.getInfo());
+        Nodo auxHijosI = new Nodo(n.getHijoI().getInfo());
+        Nodo auxHijosD = new Nodo(n.getHijoD().getInfo());
+        aux.setHijoI(auxHijosI);
+        aux.setHijoD(auxHijosD);
+        n.setInfo(p);
+        n.setPregunta(true);
+
+        if (modifier == true) {
+            n.setHijoD(aux);
+            aux = new Nodo(r);
+            auxHijosI = new Nodo("Soy el mas grande!");
+            auxHijosD = new Nodo("aqui van las preguntas");
+            aux.setHijoI(auxHijosI);
+            aux.setHijoD(auxHijosD);
+            n.setHijoI(aux);
+        }
+
+        if (modifier == false) {
+            n.setHijoI(aux);
+            aux = new Nodo(r);
+            auxHijosI = new Nodo("Soy el mas grande!");
+            auxHijosD = new Nodo("aqui van las preguntas");
+            aux.setHijoI(auxHijosI);
+            aux.setHijoD(auxHijosD);
+            n.setHijoD(aux);
+        }
+               
+    }
+    
+    public Nodo find(Nodo n, String key) {
+        
+		Nodo result = null;
+                
+		if (n == null)
+			return null;
+		if (n.getInfo().equals(key))
+			return n;
+		if (n.getHijoI()!= null)
+			result = find(n.getHijoI(), key);
+		if (result == null)
+			result = find(n.getHijoD(), key);
+                
+		return result;
+                
+    }
+    
+    
+    public void actualizarConocimientos(Nodo input, boolean primera) throws IOException{
         
         Nodo aux = input;
         String temp = new String();
+        
+        if (primera == true) {
+            bufferedWriter.write("CONOCIMIENTOS:");
+            bufferedWriter.newLine();
+        }
         
         if (aux != null) {
             
@@ -125,8 +181,8 @@ public class Tree {
             bufferedWriter.newLine();
             bufferedWriter.flush();
             
-            actualizarConocimientos(aux.getHijoI());
-            actualizarConocimientos(aux.getHijoD());
+            actualizarConocimientos(aux.getHijoI(), false);
+            actualizarConocimientos(aux.getHijoD(), false);
             
         }
         
@@ -137,7 +193,7 @@ public class Tree {
         Nodo aux = input;
         
         if (primera == true) {
-            bufferedReader.read();
+            bufferedReader.readLine();
         }
         
         char hijos = (char)bufferedReader.read();
