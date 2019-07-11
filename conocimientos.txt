@@ -1,0 +1,10 @@
+CONOCIMIENTOS:
+31Estás pensando en un animal?
+31maulla
+30gato
+00¡Adiviné!
+00Inicio: intentar de nuevo
+30pájaro
+00¡Adiviné!
+00Inicio: intentar de nuevo
+00Tiene que ser un animal

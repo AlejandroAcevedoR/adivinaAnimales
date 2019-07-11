@@ -10,6 +10,8 @@ package adivinaanimales;
  * @author Alejandro
  */
 public class Nodo {
+    
+    //boolean pregunta es particular a este proyecto, ayuda a determinar ciertas acciones tomadas por la interfaz grafica
     public boolean pregunta;
     public String info;
     public Nodo hijoI;
@@ -53,9 +55,5 @@ public class Nodo {
     public void setHijoD(Nodo hijoD) {
         this.hijoD = hijoD;
     }
-
-    
-
-    
-    
+          
 }
