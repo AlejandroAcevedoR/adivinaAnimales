@@ -10,6 +10,7 @@ package adivinaanimales;
  * @author Alejandro
  */
 public class Nodo {
+    
     public boolean pregunta;
     public String info;
     public Nodo hijoI;
@@ -53,9 +54,5 @@ public class Nodo {
     public void setHijoD(Nodo hijoD) {
         this.hijoD = hijoD;
     }
-
-    
-
-    
-    
+          
 }
